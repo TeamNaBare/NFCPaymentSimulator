@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">NFCPaymentSImulator</string>
+    <string name="title_activity_navigation">NFCPaymentSImulator</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_info_label">Informácie</string>
+    <string name="nav_merchandise_label">Tovar</string>
+    <string name="nav_basket_label">Košík</string>
+    <string name="nav_administration_label">Administrácia</string>
+    <string name="nav_logout_label">Odhlásiť</string>
+</resources>
