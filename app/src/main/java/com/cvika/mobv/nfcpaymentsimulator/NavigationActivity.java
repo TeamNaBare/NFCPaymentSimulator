@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -61,7 +63,7 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_merchandise:
                 //TODO: vytvorenie masterdetail fragmentu so zoznamom tovaru
-                //fragmentClass = MerchandiseScreen.class;
+                fragmentClass = MerchandiseFragment.class;
                 break;
             case R.id.nav_basket:
                 //TODO: vytvorenie fragmentu s kosikom v ktorom bude zobrazeny zvoleny tovar a jeho nakup
