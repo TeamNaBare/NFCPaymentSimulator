@@ -3,6 +3,7 @@ package com.cvika.mobv.nfcpaymentsimulator.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -13,7 +14,8 @@ import android.arch.persistence.room.PrimaryKey;
 public class Product {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo(name = "id")
+    private int productId;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -24,12 +26,25 @@ public class Product {
     @ColumnInfo(name = "price")
     private float price;
 
-    public int getId() {
-        return id;
+
+    public Product(int productId, String title, String description, float price) {
+        this.productId = productId;
+        this.title = title;
+        this.description = description;
+        this.price = price;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Ignore
+    public Product(){
+
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getTitle() {

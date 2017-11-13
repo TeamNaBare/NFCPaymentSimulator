@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cvika.mobv.nfcpaymentsimulator.NavigationActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
+import com.cvika.mobv.nfcpaymentsimulator.models.AutomatProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
 
@@ -25,8 +27,9 @@ import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
-    private List<Product> products;
+    private List<AutomatProduct> products;
     private Context context;
+    private String uid;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -46,9 +49,10 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         }
     }
 
-    public ProductsAdapter(List<Product> products, Context context) {
+    public ProductsAdapter(List<AutomatProduct> products, Context context, String uid) {
         this.products = products;
         this.context = context;
+        this.uid = uid;
     }
 
     @Override
@@ -67,41 +71,34 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         final Product product = products.get(position);
 
 
+
         holder.productTitleView.setText(product.getTitle());
         holder.productDescriptionView.setText(product.getDescription());
         holder.productPriceView.setText(product.getPrice() + "");
 
-        Button addToCartButton = new Button(context);
-        addToCartButton.setText(context.getString(R.string.add_to_cart));
-        addToCartButton.setOnClickListener(new View.OnClickListener() {
+        // ak pozname ID nfc karty, mozeme nakupovat
+        if(!this.uid.isEmpty()) {
 
-            @Override
-            public void onClick(View v) {
+            Button addToCartButton = new Button(context);
+            addToCartButton.setText(context.getString(R.string.add_to_cart));
+            addToCartButton.setOnClickListener(new View.OnClickListener() {
 
-                CartItem cartItem = new CartItem();
-                cartItem.setTitle(product.getTitle());
-                cartItem.setProductId(product.getId());
+                @Override
+                public void onClick(View v) {
 
-                new AsyncTask<CartItem, Void, Void>() {
+                    v.setClickable(false);
 
-                    @Override
-                    protected Void doInBackground(CartItem... cartItems) {
-                        AppDatabase db = Room.databaseBuilder(context,
-                                AppDatabase.class, AppDatabase.DB_NAME)
-                                .fallbackToDestructiveMigration()
-                                .build();
+                    CartItem cartItem = new CartItem();
+                    cartItem.setTitle(product.getTitle());
+                    cartItem.setProductId(product.getProductId());
 
-                        db.cartDao().insertAll(cartItems);
-                        return null;
-                    }
+                    // pridat do kosika
+                    new AddToCartAsync(v, context).execute(cartItem);
+                }
+            });
 
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        Log.i("M_LOG", "Product added to cart");
-                    }
-                }.execute(cartItem);
-            }
-        });
+            holder.buttonWrapper.addView(addToCartButton);
+        }
     }
 
     @Override

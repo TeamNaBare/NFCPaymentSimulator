@@ -18,13 +18,18 @@ import java.util.List;
 public interface CartDao {
 
     @Query("SELECT * FROM cart")
-    List<CartDao> getAll();
+    List<CartItem> getAll();
+
+    @Query("SELECT * FROM cart WHERE id IN (:cartItems)")
+    List<CartItem> loadAllByIds(int[] cartItems);
+
+    @Query("SELECT * FROM cart WHERE title LIKE :name LIMIT 1")
+    CartItem findByName(String name);
 
     @Insert
-    void insertAll(CartItem... cartItem);
+    void insertAll(CartItem... cartItems);
 
     @Delete
     void delete(CartItem cartItem);
-
 
 }

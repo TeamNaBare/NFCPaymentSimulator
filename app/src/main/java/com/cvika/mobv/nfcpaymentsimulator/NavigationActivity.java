@@ -2,6 +2,7 @@ package com.cvika.mobv.nfcpaymentsimulator;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
@@ -24,6 +26,8 @@ import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,7 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_administration:
                 //TODO: vytvorenie masterdetail fragmentu so zoznamom tovaru
-                //fragmentClass = AdministrationScreen.class;
+                fragmentClass = AdministrationFragment.class;
                 break;
             case R.id.nav_logout:
                 //TODO: vymazanie informacii o karte z SharedPreferences a ukoncenie aktivity
@@ -100,4 +104,6 @@ public class NavigationActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
