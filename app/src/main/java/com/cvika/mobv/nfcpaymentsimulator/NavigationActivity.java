@@ -1,5 +1,8 @@
 package com.cvika.mobv.nfcpaymentsimulator;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +13,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
+import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
+import com.cvika.mobv.nfcpaymentsimulator.models.Product;
+
+import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
