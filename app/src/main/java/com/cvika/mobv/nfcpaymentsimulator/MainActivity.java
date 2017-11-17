@@ -20,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
+
 public class MainActivity extends Activity {
 
     private final String[][] techList = new String[][] {
@@ -61,7 +63,7 @@ public class MainActivity extends Activity {
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("KEY",ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+            editor.putString(MerchandiseFragment.LOG_TAG,ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
             editor.commit();
 
             Intent intentMenu = new Intent(MainActivity.this, NavigationActivity.class);

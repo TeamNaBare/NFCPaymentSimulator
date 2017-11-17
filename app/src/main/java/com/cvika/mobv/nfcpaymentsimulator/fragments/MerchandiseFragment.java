@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class MerchandiseFragment extends Fragment {
 
-    String LOG_TAG = "M_LOG";
+    public static final String LOG_TAG = "M_LOG";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
