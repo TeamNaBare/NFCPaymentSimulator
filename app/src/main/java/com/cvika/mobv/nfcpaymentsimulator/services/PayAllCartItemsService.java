@@ -83,6 +83,7 @@ public class PayAllCartItemsService extends IntentService {
         try {
             cartItems = (List<CartItem>) cartItemsTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, userId).get();
 
+            // ak nejake polozky mame v kosiku ideme platit
             Log.i("M_LOG", "Pocet poloziek: " + cartItems.size());
             if(cartItems != null && !cartItems.isEmpty()){
 
