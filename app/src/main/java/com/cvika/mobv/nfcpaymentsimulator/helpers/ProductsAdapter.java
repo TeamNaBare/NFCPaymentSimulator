@@ -68,15 +68,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
 
-        final Product product = products.get(position);
+        final AutomatProduct product = products.get(position);
 
-
-
+        // TextView's
         holder.productTitleView.setText(product.getTitle());
         holder.productDescriptionView.setText(product.getDescription());
         holder.productPriceView.setText(product.getPrice() + "");
 
-        // ak pozname ID nfc karty, mozeme nakupovat
+        // ak pozname ID nfc karty, mozeme nakupovat => pridame button
         if(!this.uid.isEmpty()) {
 
             Button addToCartButton = new Button(context);
@@ -86,14 +85,18 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
 
-                    v.setClickable(false);
+                v.setClickable(false);
 
-                    CartItem cartItem = new CartItem();
-                    cartItem.setTitle(product.getTitle());
-                    cartItem.setProductId(product.getProductId());
+                CartItem cartItem = new CartItem();
+                cartItem.setTitle(product.getTitle());
+                cartItem.setProductId(product.getProductId());
+                cartItem.setUid(uid);
 
-                    // pridat do kosika
-                    new AddToCartAsync(v, context).execute(cartItem);
+                Log.i("M_LOG", "Add to cart " + product.getTitle() +" by user: " + uid);
+
+                // pridat do kosika
+                new AddToCartAsync(v, context).execute(cartItem);
+                new RemoveFromAutomatAsync(v, context).execute(product);
                 }
             });
 

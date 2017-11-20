@@ -21,6 +21,10 @@ public interface ProductDao {
     @Query("SELECT * FROM products")
     List<Product> getAll();
 
+
+    @Query("SELECT * FROM products WHERE id=:id")
+    Product getById(int id);
+
     @Query("SELECT * FROM products WHERE id IN (:productIds)")
     List<Product> loadAllByIds(int[] productIds);
 

@@ -13,12 +13,12 @@ import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
  * Created by rybec on 13.11.2017.
  */
 
-public class AddToCartAsync extends AsyncTask<CartItem, Void, Void> {
+public class GetProductByIdAsync extends AsyncTask<CartItem, Void, Void> {
 
     private View view;
     private Context context;
 
-    public AddToCartAsync(View view, Context context) {
+    public GetProductByIdAsync(View view, Context context) {
         this.view = view;
         this.context = context;
     }
@@ -36,6 +36,7 @@ public class AddToCartAsync extends AsyncTask<CartItem, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
         Log.i("M_LOG", "Product added to cart");
         if(!view.isClickable()){
             view.setClickable(true);

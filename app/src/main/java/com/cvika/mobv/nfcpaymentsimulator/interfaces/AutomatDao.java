@@ -24,6 +24,9 @@ public interface AutomatDao {
     @Query("SELECT * FROM automat_items WHERE id IN (:automatItemIds)")
     List<AutomatItem> loadAllByIds(int[] automatItemIds);
 
+    @Query("SELECT * FROM automat_items WHERE id=:automatItemId")
+    List<AutomatItem> loadById(int automatItemId);
+
     @Insert
     void insertAll(AutomatItem... automatItems);
 
@@ -32,5 +35,8 @@ public interface AutomatDao {
 
     @Delete
     void delete(AutomatItem automatItem);
+
+    @Query("DELETE FROM automat_items WHERE id=:id")
+    void deleteById(int id);
 
 }

@@ -55,7 +55,9 @@ public class MerchandiseFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
+
+
+        // vyber produktov z automatu a vylistovanie v recyclerView
         new AsyncTask<Void, Void, List<AutomatProduct>>() {
 
             @Override
@@ -66,48 +68,17 @@ public class MerchandiseFragment extends Fragment {
                         .fallbackToDestructiveMigration()
                         .build();
 
-
                 return db.automatDao().getAvailableProducts();
             }
 
             @Override
             protected void onPostExecute(List<AutomatProduct> products) {
 
-                Log.i("M_LOG", "pocet v automate JOIN "  + products.size());
                 mAdapter = new ProductsAdapter(products, context, loadCardId());
                 mRecyclerView.setAdapter(mAdapter);
-
             }
 
         }.execute();
-
-
-        new AsyncTask<Void, Void, List<AutomatItem>>() {
-
-            @Override
-            protected List<AutomatItem> doInBackground(Void... params) {
-
-                AppDatabase db = Room.databaseBuilder(context,
-                        AppDatabase.class, AppDatabase.DB_NAME)
-                        .fallbackToDestructiveMigration()
-                        .build();
-
-
-                return db.automatDao().getAll();
-            }
-
-            @Override
-            protected void onPostExecute(List<AutomatItem> products) {
-
-                for(AutomatItem i : products){
-
-                    Log.i("M_LOG", "product_id >> " + i.getProductId());
-                }
-
-            }
-
-        }.execute();
-
 
         return view;
     }
@@ -115,8 +86,11 @@ public class MerchandiseFragment extends Fragment {
     public String loadCardId(){
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String uid = sharedPref.getString(MainActivity.CARD_ID_KEY, "");
+
+        // TODO: poslat z mainActivity
+        String uid = sharedPref.getString(MainActivity.CARD_ID_KEY, "USER123456");
 
         return uid;
     }
+
 }

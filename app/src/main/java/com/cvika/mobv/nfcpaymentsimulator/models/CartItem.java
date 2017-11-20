@@ -37,6 +37,7 @@ public class CartItem {
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
     )
+    @ColumnInfo(name = "product_id")
     private int productId;
 
     @ColumnInfo(name = "paid")

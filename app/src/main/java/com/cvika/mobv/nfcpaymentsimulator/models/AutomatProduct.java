@@ -15,4 +15,12 @@ public class AutomatProduct extends Product{
         this.automatItemId = automatItemId;
         this.isSold = isSold;
     }
+
+    public int getAutomatItemId() {
+        return automatItemId;
+    }
+
+    public void setAutomatItemId(int automatItemId) {
+        this.automatItemId = automatItemId;
+    }
 }
