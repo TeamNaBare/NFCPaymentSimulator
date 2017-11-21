@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NFCPaymentSImulator2.iml" filepath="$PROJECT_DIR$/NFCPaymentSImulator2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/NFCPaymentSimulator.iml" filepath="$PROJECT_DIR$/NFCPaymentSimulator.iml" />
+      <module fileurl="file://C:\Users\Michal\AndroidStudioProjects\NFCPaymentSimulator-master\NFCPaymentSImulator2.iml" filepath="C:\Users\Michal\AndroidStudioProjects\NFCPaymentSimulator-master\NFCPaymentSImulator2.iml" />
+      <module fileurl="file://C:\Users\Michal\AndroidStudioProjects\NFCPaymentSimulator-master\NFCPaymentSimulator.iml" filepath="C:\Users\Michal\AndroidStudioProjects\NFCPaymentSimulator-master\NFCPaymentSimulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/NFCPaymentSimulator-master.iml" filepath="$PROJECT_DIR$/NFCPaymentSimulator-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

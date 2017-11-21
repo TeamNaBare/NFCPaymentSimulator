@@ -1,6 +1,7 @@
 package com.cvika.mobv.nfcpaymentsimulator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,6 +15,7 @@ import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,8 @@ import android.widget.TextView;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 
 public class MainActivity extends Activity {
+
+    public static final String CARD_ID_KEY = "com.cvika.mobv.nfcpaymentsimulator.shared.CARD_ID_KEY";
 
     private final String[][] techList = new String[][] {
             new String[] {
@@ -40,6 +44,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        saveCardId("CARD123456");
     }
 
     @Override
@@ -86,5 +92,12 @@ public class MainActivity extends Activity {
             out += hex[i];
         }
         return out;
+    }
+
+    public void saveCardId(String cardId){
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(CARD_ID_KEY, cardId);
+            editor.apply();
     }
 }

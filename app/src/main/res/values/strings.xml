@@ -10,6 +10,12 @@
     <string name="nav_administration_label">Administrácia</string>
     <string name="nav_logout_label">Odhlásiť</string>
 
+    <string name="add_to_cart">Kúpiť</string>
+
+    <string name="generate_products">Vygenerovať produkty</string>
+    <string name="add_to_automat">Pridať do automatu</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="use_card">Priložte NFC kartu</string>
