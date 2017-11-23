@@ -60,7 +60,14 @@ public class MainActivity extends Activity {
         filter.addAction(NfcAdapter.ACTION_TECH_DISCOVERED);
         // enabling foreground dispatch for getting intent from NFC event:
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{filter}, this.techList);
+
+        if(nfcAdapter != null) {
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{filter}, this.techList);
+        } else {
+            Intent intentMenu = new Intent(MainActivity.this, NavigationActivity.class);
+            startActivity(intentMenu);
+            finish();
+        }
     }
 
     @Override
