@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.InfoFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
@@ -30,15 +32,20 @@ import com.cvika.mobv.nfcpaymentsimulator.models.CartProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.OrderItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
 import com.cvika.mobv.nfcpaymentsimulator.services.PayAllCartItemsService;
+
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import static com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment.LOG_TAG;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private String cardId;
+    private static final String ADMIN_CARD = "04404A5ADA2580";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +63,23 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        cardId = preferences.getString(LOG_TAG,"");
+
+        if(!cardId.equalsIgnoreCase(ADMIN_CARD)) {
+            navigationView.getMenu().findItem(R.id.nav_administration).setVisible(false);
+        }
+        //TO DO: Toto potom vymazat
+        Log.d("ISIC ID",cardId);
+        Toast.makeText(this,cardId,Toast.LENGTH_LONG).show();
+
         if (findViewById(R.id.flContent) != null) {
             if (savedInstanceState != null) {
                 return;
             }
+
+            InfoFragment infoFragment = new InfoFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.flContent, infoFragment).commit();
         }
     }
 
@@ -83,7 +103,7 @@ public class NavigationActivity extends AppCompatActivity
         switch(item.getItemId()) {
             case R.id.nav_info:
                 //TODO: vytvorenie fragmentu s informaciami o karte
-                //fragmentClass = InfoScreen.class;
+                fragmentClass = InfoFragment.class;
                 break;
             case R.id.nav_merchandise:
                 //TODO: vytvorenie masterdetail fragmentu so zoznamom tovaru
@@ -101,7 +121,7 @@ public class NavigationActivity extends AppCompatActivity
                 //TODO: vymazanie informacii o karte z SharedPreferences a ukoncenie aktivity
                 break;
             default:
-                //fragmentClass = InfoScreen.class;
+                fragmentClass = InfoFragment.class;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
