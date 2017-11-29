@@ -33,7 +33,7 @@
             android:exported="false" />
 
         <service
-            android:name=".service.LogoutService"
+            android:name=".services.LogoutService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

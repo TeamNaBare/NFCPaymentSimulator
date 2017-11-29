@@ -19,7 +19,7 @@ import android.preference.PreferenceManager;
 import android.os.Bundle;
 
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
-import com.cvika.mobv.nfcpaymentsimulator.service.LogoutService;
+import com.cvika.mobv.nfcpaymentsimulator.services.LogoutService;
 
 public class MainActivity extends Activity {
 
