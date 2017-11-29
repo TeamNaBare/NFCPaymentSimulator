@@ -15,14 +15,11 @@ import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
-import android.content.SharedPreferences;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
+import com.cvika.mobv.nfcpaymentsimulator.service.LogoutService;
 
 public class MainActivity extends Activity {
 
@@ -63,11 +60,17 @@ public class MainActivity extends Activity {
 
         if(nfcAdapter != null) {
             nfcAdapter.enableForegroundDispatch(this, pendingIntent, new IntentFilter[]{filter}, this.techList);
+
         } else {
             Intent intentMenu = new Intent(MainActivity.this, NavigationActivity.class);
             startActivity(intentMenu);
             finish();
         }
+    }
+    private PendingIntent pIntent;
+    private void startTimer(int time) {
+        Intent intent = new Intent(MainActivity.this, LogoutService.class);
+        startService(intent);
     }
 
     @Override
@@ -81,6 +84,7 @@ public class MainActivity extends Activity {
 
             Intent intentMenu = new Intent(MainActivity.this, NavigationActivity.class);
             startActivity(intentMenu);
+            startTimer(1);
             finish();
         }
     }
