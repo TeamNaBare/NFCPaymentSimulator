@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.BasketFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.InfoFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
@@ -111,7 +112,7 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_basket:
                 //TODO: vytvorenie fragmentu s kosikom v ktorom bude zobrazeny zvoleny tovar a jeho nakup
-                //fragmentClass = BasketScreen.class;
+                fragmentClass = BasketFragment.class;
                 break;
             case R.id.nav_administration:
                 //TODO: vytvorenie masterdetail fragmentu so zoznamom tovaru
