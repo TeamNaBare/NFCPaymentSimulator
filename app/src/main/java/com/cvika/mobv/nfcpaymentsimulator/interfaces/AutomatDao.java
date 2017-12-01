@@ -39,4 +39,10 @@ public interface AutomatDao {
     @Query("DELETE FROM automat_items WHERE id=:id")
     void deleteById(int id);
 
+    @Query("SELECT * FROM automat_items WHERE product_id=:id")
+    List<AutomatItem> getByProductId(int id);
+
+    @Query("DELETE FROM automat_items WHERE product_id=:id")
+    void deleteByProductId(int id);
+
 }

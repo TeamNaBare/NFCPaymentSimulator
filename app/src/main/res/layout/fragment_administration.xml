@@ -1,21 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment">
+    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment"
+    android:background="@drawable/settings_background"
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/generate_products"
-        android:onClick="generateProducts"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_automat"
-        android:onClick="addAllProductsToAutomatOneTime"/>
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/add_one_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/add_product" />
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/delete_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/delete_product" />
 
-</LinearLayout>
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/add_to_automat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/add_to_automat"/>
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/generate_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/generate_products" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/add_one_of_each"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_all_items" />
+    </LinearLayout>
+
+</RelativeLayout>
