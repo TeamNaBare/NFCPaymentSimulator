@@ -99,7 +99,6 @@ public class AdministrationFragment extends Fragment {
         dialog.setTitle(R.string.add_prod);
         final Spinner productsSpinner = (Spinner) dialog.findViewById(R.id.products);
         final View view = getView().findViewById(R.id.add_to_automat);
-        view.setClickable(false);
         try {
             List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
             SpinnerProductsAdapter productsAdapter = new SpinnerProductsAdapter(getActivity(), android.R.layout.simple_spinner_item, products);
@@ -150,7 +149,6 @@ public class AdministrationFragment extends Fragment {
         dialog.setTitle(R.string.add_prod);
         final Spinner productsSpinner = (Spinner) dialog.findViewById(R.id.products);
         final View view = getView().findViewById(R.id.delete_product);
-        view.setClickable(false);
         try {
             List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
             SpinnerProductsAdapter productsAdapter = new SpinnerProductsAdapter(getActivity(), android.R.layout.simple_spinner_item, products);
