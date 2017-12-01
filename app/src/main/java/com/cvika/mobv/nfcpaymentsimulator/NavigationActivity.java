@@ -32,6 +32,7 @@ import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.OrderItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
+import com.cvika.mobv.nfcpaymentsimulator.services.LogoutService;
 import com.cvika.mobv.nfcpaymentsimulator.services.PayAllCartItemsService;
 
 import java.io.Console;
@@ -119,8 +120,13 @@ public class NavigationActivity extends AppCompatActivity
                 fragmentClass = AdministrationFragment.class;
                 break;
             case R.id.nav_logout:
-                //TODO: vymazanie informacii o karte z SharedPreferences a ukoncenie aktivity
-                break;
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                editor.remove(MainActivity.CARD_ID_KEY);
+                editor.commit();
+                Intent i = new Intent(NavigationActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+                return true;
             default:
                 fragmentClass = InfoFragment.class;
         }
