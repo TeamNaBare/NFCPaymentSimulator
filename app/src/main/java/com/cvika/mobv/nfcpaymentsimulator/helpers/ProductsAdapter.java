@@ -3,6 +3,7 @@ package com.cvika.mobv.nfcpaymentsimulator.helpers;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         private TextView productDescriptionView;
         private TextView productPriceView;
         private LinearLayout buttonWrapper;
+        private Button addToCartButton;
 
 
         public ViewHolder(View v) {
@@ -46,6 +48,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
             productDescriptionView = (TextView)v.findViewById(R.id.productDescriptionView);
             productPriceView = (TextView)v.findViewById(R.id.productPriceView);
             buttonWrapper = (LinearLayout)v.findViewById(R.id.addToCartButtonWrapper);
+            addToCartButton = (Button) v.findViewById(R.id.addToCartButton);
         }
     }
 
@@ -73,14 +76,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         // TextView's
         holder.productTitleView.setText(product.getTitle());
         holder.productDescriptionView.setText(product.getDescription());
-        holder.productPriceView.setText(product.getPrice() + "");
+        holder.productPriceView.setText(product.getPrice() + " €");
 
         // ak pozname ID nfc karty, mozeme nakupovat => pridame button
-        if(!this.uid.isEmpty()) {
+        //if(!this.uid.isEmpty()) {
 
-            Button addToCartButton = new Button(context);
-            addToCartButton.setText(context.getString(R.string.add_to_cart));
-            addToCartButton.setOnClickListener(new View.OnClickListener() {
+            //Button addToCartButton = new Button(context);
+            holder.addToCartButton.setText(context.getString(R.string.add_to_cart));
+            holder.addToCartButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -100,8 +103,8 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 }
             });
 
-            holder.buttonWrapper.addView(addToCartButton);
-        }
+            //holder.buttonWrapper.addView(addToCartButton);
+        //}
     }
 
     @Override

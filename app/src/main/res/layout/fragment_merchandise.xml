@@ -1,8 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment"
+    android:paddingTop="8dp">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/productsRecyclerView"
@@ -11,11 +13,16 @@
         android:layout_height="match_parent"/>
 
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/showBasket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="payAllCartItems"
-        android:layout_gravity="bottom"
-        android:text="Zaplatit kosik"/>
+        android:layout_gravity="bottom|right"
+        android:src="@mipmap/ic_shopping_basket"
+        app:backgroundTint="#00BFA5"
+        app:elevation="8dp"
+        app:layout_anchor="@+id/productsRecyclerView"
+        app:layout_anchorGravity="bottom|right|end" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>
