@@ -98,7 +98,7 @@ public class AdministrationFragment extends Fragment {
         dialog.setContentView(R.layout.add_item_dialog);
         dialog.setTitle(R.string.add_prod);
         final Spinner productsSpinner = (Spinner) dialog.findViewById(R.id.products);
-        final View view = getView().findViewById(R.id.add_one_product);
+        final View view = getView().findViewById(R.id.add_to_automat);
         view.setClickable(false);
         try {
             List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
@@ -149,7 +149,7 @@ public class AdministrationFragment extends Fragment {
         dialog.setContentView(R.layout.delete_product_dialog);
         dialog.setTitle(R.string.add_prod);
         final Spinner productsSpinner = (Spinner) dialog.findViewById(R.id.products);
-        final View view = getView().findViewById(R.id.add_one_product);
+        final View view = getView().findViewById(R.id.delete_product);
         view.setClickable(false);
         try {
             List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
