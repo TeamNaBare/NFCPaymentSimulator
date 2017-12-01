@@ -3,8 +3,11 @@
     package="com.cvika.mobv.nfcpaymentsimulator">
 
     <!-- Permission for using NFC hardware -->
-    <uses-permission android:name="android.permission.NFC"/>
-    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +19,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,7 +30,12 @@
 
         <service
             android:name=".services.PayAllCartItemsService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <service
+            android:name=".services.LogoutService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.BasketFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.InfoFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
@@ -31,6 +32,7 @@ import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.OrderItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
+import com.cvika.mobv.nfcpaymentsimulator.services.LogoutService;
 import com.cvika.mobv.nfcpaymentsimulator.services.PayAllCartItemsService;
 
 import java.io.Console;
@@ -45,7 +47,7 @@ public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String cardId;
-    private static final String ADMIN_CARD = "04404A5ADA2580";
+    private static final String ADMIN_CARD = "048E610ADA2580";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +113,20 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_basket:
                 //TODO: vytvorenie fragmentu s kosikom v ktorom bude zobrazeny zvoleny tovar a jeho nakup
-                //fragmentClass = BasketScreen.class;
+                fragmentClass = BasketFragment.class;
                 break;
             case R.id.nav_administration:
                 //TODO: vytvorenie masterdetail fragmentu so zoznamom tovaru
                 fragmentClass = AdministrationFragment.class;
                 break;
             case R.id.nav_logout:
-                //TODO: vymazanie informacii o karte z SharedPreferences a ukoncenie aktivity
-                break;
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                editor.remove(MainActivity.CARD_ID_KEY);
+                editor.commit();
+                Intent i = new Intent(NavigationActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+                return true;
             default:
                 fragmentClass = InfoFragment.class;
         }
@@ -152,119 +159,10 @@ public class NavigationActivity extends AppCompatActivity
         intent.setAction(PayAllCartItemsService.PAY_ALL_CART_ITEMS);
         intent.putExtra(PayAllCartItemsService.EXTRA_USER_ID, uid);
         startService(intent);
-
     }
 
 
     /* Vygeneruje 3 produkty do tabulky product */
-    public void generateProducts(View view){
 
-        view.setClickable(false);
-
-        List<Product> products = new ArrayList<>();
-
-        Product snickers = new Product();
-        snickers.setTitle("Snickers");
-        snickers.setDescription("Čokoládová tyčinka");
-        snickers.setPrice(0.59f);
-        products.add(snickers);
-
-        Product kofola = new Product();
-        kofola.setTitle("Kofola");
-        kofola.setDescription("0.5L");
-        kofola.setPrice(0.79f);
-        products.add(kofola);
-
-        Product coffee = new Product();
-        coffee.setTitle("Káva");
-        coffee.setDescription("0.2L");
-        coffee.setPrice(0.50f);
-        products.add(coffee);
-
-        for (Product p : products){
-            new AsyncTask<Product, Void, Void>() {
-                @Override
-                protected Void doInBackground(Product... products) {
-                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, AppDatabase.DB_NAME)
-                            .fallbackToDestructiveMigration()
-                            .build();
-
-                    db.productDao().insertAll(products);
-
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    Toast.makeText(getApplicationContext(), "Produkt bol vygenerovaný", Toast.LENGTH_SHORT).show();
-                }
-            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, p);
-        }
-    }
-
-    /* Prida z kazdeho produktu po jednom do tabulky automat */
-    public void addAllProductsToAutomatOneTime(final View view){
-
-        view.setClickable(false);
-
-        // vytvorime produkt
-        new AsyncTask<Void, Void, List<Product>>() {
-
-            @Override
-            protected  List<Product> doInBackground(Void... params) {
-
-                AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, AppDatabase.DB_NAME)
-                        .fallbackToDestructiveMigration()
-                        .build();
-
-
-                return db.productDao().getAll();
-            }
-
-            @Override
-            protected void onPostExecute(final List<Product> products) {
-
-
-                new AsyncTask<Void, Void, Void>() {
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-
-                        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                                AppDatabase.class, AppDatabase.DB_NAME)
-                                .fallbackToDestructiveMigration()
-                                .build();
-
-                        AutomatItem[] automatItems = new AutomatItem[products.size()];
-
-                        int idx = 0;
-                        for(Product p : products){
-                            AutomatItem item = new AutomatItem();
-                            item.setUid("CARD654321");
-                            item.setProductId(p.getProductId());
-
-                            automatItems[idx] = item;
-                            idx++;
-                        }
-
-                        db.automatDao().insertAll(automatItems);
-
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Produkty boli pridané do automatu", Toast.LENGTH_SHORT).show();
-                        view.setClickable(true);
-                    }
-
-                }.execute();
-
-            }
-        }.execute();
-
-    }
 
 }
