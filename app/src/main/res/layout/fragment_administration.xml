@@ -30,6 +30,14 @@
 
         <Button
             style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/add_to_automat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/add_to_automat"/>
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/generate_products"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +49,7 @@
             android:id="@+id/add_one_of_each"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_to_automat" />
+            android:text="@string/add_all_items" />
     </LinearLayout>
 
 </RelativeLayout>

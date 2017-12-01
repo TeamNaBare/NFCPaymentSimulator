@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.SpinnerProductsAdapter;
@@ -60,6 +62,14 @@ public class AdministrationFragment extends Fragment {
             }
         });
 
+        Button addToAutomat = (Button) view.findViewById(R.id.add_to_automat);
+        addToAutomat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToAutomat(v);
+            }
+        });
+
         Button generateProducts = (Button) view.findViewById(R.id.generate_products);
         generateProducts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +89,57 @@ public class AdministrationFragment extends Fragment {
         return view;
     }
 
+    private void addToAutomat(View v) {
+        showAddToAutomatDialog();
+    }
+
+    private void showAddToAutomatDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.add_item_dialog);
+        dialog.setTitle(R.string.add_prod);
+        final Spinner productsSpinner = (Spinner) dialog.findViewById(R.id.products);
+        final View view = getView().findViewById(R.id.add_one_product);
+        view.setClickable(false);
+        try {
+            List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
+            SpinnerProductsAdapter productsAdapter = new SpinnerProductsAdapter(getActivity(), android.R.layout.simple_spinner_item, products);
+            productsSpinner.setAdapter(productsAdapter);
+            // set the custom dialog components - text, image and button;
+            Button addButton = (Button) dialog.findViewById(R.id.add_item_btn);
+
+            // if button is clicked, close the custom dialog
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Product p = (Product) productsSpinner.getSelectedItem();
+
+                    view.setClickable(false);
+                    AutomatItem ai = new AutomatItem();
+                    ai.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MainActivity.CARD_ID_KEY, "none"));
+                    ai.setProductId(p.getProductId());
+                    new AutomatItemsFiller(getActivity().getApplicationContext(), view).execute(ai);
+                    dialog.dismiss();
+                }
+            });
+
+            Button cancelButton = (Button) dialog.findViewById(R.id.cancel_btn);
+            // if button is clicked, close the custom dialog
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            dialog.show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void deleteProduct(View v) {
         showDeleteDialog();
     }
@@ -92,7 +153,7 @@ public class AdministrationFragment extends Fragment {
         view.setClickable(false);
         try {
             List<Product> products = new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute().get();
-            SpinnerProductsAdapter productsAdapter = new SpinnerProductsAdapter(getActivity(),android.R.layout.simple_spinner_item,products);
+            SpinnerProductsAdapter productsAdapter = new SpinnerProductsAdapter(getActivity(), android.R.layout.simple_spinner_item, products);
             productsSpinner.setAdapter(productsAdapter);
             // set the custom dialog components - text, image and button;
             Button deleteButton = (Button) dialog.findViewById(R.id.delete_btn);
@@ -215,7 +276,7 @@ public class AdministrationFragment extends Fragment {
             int idx = 0;
             for (Product p : products) {
                 AutomatItem item = new AutomatItem();
-                item.setUid("CARD654321");
+                item.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MainActivity.CARD_ID_KEY, "none"));
                 item.setProductId(p.getProductId());
 
                 automatItems[idx] = item;
@@ -324,9 +385,10 @@ public class AdministrationFragment extends Fragment {
         }
     }
 
-    private class DatabaseProductDeleter extends AsyncTask<Product, Void, Void>{
+    private class DatabaseProductDeleter extends AsyncTask<Product, Void, Void> {
         private View view;
         private Context context;
+
         public DatabaseProductDeleter(Context applicationContext, View view) {
             this.view = view;
             this.context = applicationContext;
@@ -357,3 +419,5 @@ public class AdministrationFragment extends Fragment {
         }
     }
 }
+
+
