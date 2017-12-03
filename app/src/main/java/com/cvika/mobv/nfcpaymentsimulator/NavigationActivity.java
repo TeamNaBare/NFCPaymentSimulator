@@ -1,10 +1,8 @@
 package com.cvika.mobv.nfcpaymentsimulator;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -20,26 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.AdministrationFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.BasketFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.InfoFragment;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
-import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
-import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
-import com.cvika.mobv.nfcpaymentsimulator.models.AutomatItem;
-import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
-import com.cvika.mobv.nfcpaymentsimulator.models.CartProduct;
-import com.cvika.mobv.nfcpaymentsimulator.models.OrderItem;
-import com.cvika.mobv.nfcpaymentsimulator.models.Product;
-import com.cvika.mobv.nfcpaymentsimulator.services.LogoutService;
 import com.cvika.mobv.nfcpaymentsimulator.services.PayAllCartItemsService;
-
-import java.io.Console;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Executor;
 
 import static com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment.LOG_TAG;
 
@@ -122,7 +105,7 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                editor.remove(MainActivity.CARD_ID_KEY);
+                editor.remove(MerchandiseFragment.LOG_TAG);
                 editor.commit();
                 Intent i = new Intent(NavigationActivity.this, MainActivity.class);
                 startActivity(i);

@@ -21,9 +21,11 @@ import android.os.Bundle;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.services.LogoutService;
 
+import java.util.Random;
+
 public class MainActivity extends Activity {
 
-    public static final String CARD_ID_KEY = "com.cvika.mobv.nfcpaymentsimulator.shared.CARD_ID_KEY";
+    public static final String CARD_BALANCE_KEY = "CARD_BALANCE";
 
     private final String[][] techList = new String[][] {
             new String[] {
@@ -80,6 +82,7 @@ public class MainActivity extends Activity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(MerchandiseFragment.LOG_TAG,ByteArrayToHexString(intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)));
+            editor.putFloat(MainActivity.CARD_BALANCE_KEY, new Random().nextInt(20)+1);
             editor.commit();
 
             Intent intentMenu = new Intent(MainActivity.this, NavigationActivity.class);
@@ -108,7 +111,7 @@ public class MainActivity extends Activity {
     public void saveCardId(String cardId){
             SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(CARD_ID_KEY, cardId);
+            editor.putString(MerchandiseFragment.LOG_TAG, cardId);
             editor.apply();
     }
 }

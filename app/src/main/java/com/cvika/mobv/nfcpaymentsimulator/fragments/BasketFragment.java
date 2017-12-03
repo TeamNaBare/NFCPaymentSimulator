@@ -16,8 +16,6 @@ import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.BasketAdapter;
-import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
-import com.cvika.mobv.nfcpaymentsimulator.models.AutomatProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartProduct;
 
 import java.util.List;
@@ -79,7 +77,7 @@ public class BasketFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // TODO: poslat z mainActivity
-        String uid = sharedPref.getString(MainActivity.CARD_ID_KEY, "USER123456");
+        String uid = sharedPref.getString(MerchandiseFragment.LOG_TAG, "USER123456");
 
         return uid;
     }

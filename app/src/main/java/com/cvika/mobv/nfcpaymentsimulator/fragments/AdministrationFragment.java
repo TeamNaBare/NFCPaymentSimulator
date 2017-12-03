@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -114,7 +113,7 @@ public class AdministrationFragment extends Fragment {
 
                     view.setClickable(false);
                     AutomatItem ai = new AutomatItem();
-                    ai.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MainActivity.CARD_ID_KEY, "none"));
+                    ai.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MerchandiseFragment.LOG_TAG, "none"));
                     ai.setProductId(p.getProductId());
                     new AutomatItemsFiller(getActivity().getApplicationContext(), view).execute(ai);
                     dialog.dismiss();
@@ -274,7 +273,7 @@ public class AdministrationFragment extends Fragment {
             int idx = 0;
             for (Product p : products) {
                 AutomatItem item = new AutomatItem();
-                item.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MainActivity.CARD_ID_KEY, "none"));
+                item.setUid(PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(MerchandiseFragment.LOG_TAG, "none"));
                 item.setProductId(p.getProductId());
 
                 automatItems[idx] = item;

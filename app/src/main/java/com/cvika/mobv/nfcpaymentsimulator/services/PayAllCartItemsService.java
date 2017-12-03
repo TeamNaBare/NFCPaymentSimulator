@@ -4,10 +4,12 @@ import android.app.IntentService;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.OrderItem;
@@ -87,6 +89,7 @@ public class PayAllCartItemsService extends IntentService {
             Log.i("M_LOG", "Pocet poloziek: " + cartItems.size());
             if(cartItems != null && !cartItems.isEmpty()){
 
+                float balance = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getFloat(MerchandiseFragment.LOG_TAG,0);
                 // prechadzame cely kosik
                 for(final CartItem cartItem : cartItems){
 
@@ -113,7 +116,12 @@ public class PayAllCartItemsService extends IntentService {
                             Log.i("M_LOG", "Vytvorena objednavka");
                         }
                     }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, cartItem.getProductId());
+                    if(orderItems.get(orderItems.size()-1).getPrice() < balance){
+                        balance -= orderItems.get(orderItems.size()-1).getPrice();
+                    }else{
+                        return;
 
+                    }
                     // nastavi polozku v kosiku ako zaplatenu
                     new AsyncTask<CartItem, Void, Void>() {
                         @Override
