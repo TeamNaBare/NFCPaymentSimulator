@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
@@ -31,6 +33,7 @@ public class BasketFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FloatingActionButton payBasketBtn;
     private Context context;
 
     @Override
@@ -47,6 +50,9 @@ public class BasketFragment extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Floating button ktorym sa bude platit
+        FloatingActionButton payBasketBtn = (FloatingActionButton) view.findViewById(R.id.payBasket);
 
         // vyber nezaplatenych produktov z kosika a vylistovanie v recyclerView
         new AsyncTask<Void, Void, List<CartProduct>>() {
