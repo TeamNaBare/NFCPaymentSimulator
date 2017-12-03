@@ -65,6 +65,21 @@ public class MerchandiseFragment extends Fragment {
 
 
         // vyber produktov z automatu a vylistovanie v recyclerView
+        setProducts();
+        return view;
+    }
+
+    public String loadCardId(){
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        // TODO: poslat z mainActivity
+        String uid = sharedPref.getString(MerchandiseFragment.LOG_TAG, "USER123456");
+
+        return uid;
+    }
+
+    public void setProducts(){
         new AsyncTask<Void, Void, List<AutomatProduct>>() {
 
             @Override
@@ -81,23 +96,12 @@ public class MerchandiseFragment extends Fragment {
             @Override
             protected void onPostExecute(List<AutomatProduct> products) {
 
-                mAdapter = new ProductsAdapter(products, context, loadCardId());
+                mAdapter = new ProductsAdapter(products, context, loadCardId(),MerchandiseFragment.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
         }.execute();
 
-        return view;
-    }
-
-    public String loadCardId(){
-
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-        // TODO: poslat z mainActivity
-        String uid = sharedPref.getString(MerchandiseFragment.LOG_TAG, "USER123456");
-
-        return uid;
     }
 
 }

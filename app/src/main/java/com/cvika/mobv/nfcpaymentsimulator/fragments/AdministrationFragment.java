@@ -263,7 +263,7 @@ public class AdministrationFragment extends Fragment {
     public void addAllProductsToAutomatOneTime(final View view) {
 
         view.setClickable(false);
-        new DatabaseFinder(getActivity().getApplicationContext(), view, false).execute();
+        new DatabaseFinder(getActivity().getApplicationContext(), view, true).execute();
     }
 
     private void onProductsFound(List<Product> products, boolean toAddAutomatItems) {
@@ -353,7 +353,7 @@ public class AdministrationFragment extends Fragment {
         }
     }
 
-    private class AutomatItemsFiller extends AsyncTask<AutomatItem, Void, Void> {
+    public class AutomatItemsFiller extends AsyncTask<AutomatItem, Void, Void> {
 
         private final Context context;
         private View view;

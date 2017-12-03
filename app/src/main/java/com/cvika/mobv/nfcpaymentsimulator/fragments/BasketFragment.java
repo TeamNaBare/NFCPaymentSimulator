@@ -40,7 +40,7 @@ public class BasketFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_basket, container, false);
-
+        view.getBackground().setAlpha(30);
         context = this.getActivity().getApplicationContext();
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.productsRecyclerView);
@@ -53,6 +53,12 @@ public class BasketFragment extends Fragment {
         FloatingActionButton payBasketBtn = (FloatingActionButton) view.findViewById(R.id.payBasket);
 
         // vyber nezaplatenych produktov z kosika a vylistovanie v recyclerView
+        setCartItems();
+
+        return view;
+    }
+
+    public void setCartItems(){
         new AsyncTask<Void, Void, List<CartProduct>>() {
 
             @Override
@@ -69,13 +75,11 @@ public class BasketFragment extends Fragment {
             @Override
             protected void onPostExecute(List<CartProduct> products) {
 
-                mAdapter = new BasketAdapter(products, context, loadCardId());
+                mAdapter = new BasketAdapter(products, context, loadCardId(),BasketFragment.this);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
         }.execute();
-
-        return view;
     }
 
     public String loadCardId(){

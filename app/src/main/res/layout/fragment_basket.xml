@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.BasketFragment">
+    tools:context="com.cvika.mobv.nfcpaymentsimulator.fragments.BasketFragment"
+    android:background="@drawable/cart_background">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/productsRecyclerView"

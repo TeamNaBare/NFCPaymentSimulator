@@ -37,6 +37,9 @@ public interface CartDao {
     @Query("UPDATE cart SET paid=1 WHERE id=:id")
     void setAsPaid(int id);
 
+    @Query("SELECT * FROM cart where id=:id")
+    List<CartItem> findById(int id);
+
     @Insert
     void insertAll(CartItem... cartItems);
 

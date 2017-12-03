@@ -3,11 +3,13 @@ package com.cvika.mobv.nfcpaymentsimulator.services;
 import android.app.IntentService;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.AddOrderAsync;
@@ -89,13 +91,13 @@ public class PayAllCartItemsService extends IntentService {
             Log.i("M_LOG", "Pocet poloziek: " + cartItems.size());
             if(cartItems != null && !cartItems.isEmpty()){
 
-                float balance = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getFloat(MerchandiseFragment.LOG_TAG,0);
+                float balance = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getFloat(MainActivity.CARD_BALANCE_KEY,0);
                 // prechadzame cely kosik
                 for(final CartItem cartItem : cartItems){
 
                     // TODO: check & update penazi
                     // vytvori objednavku
-                    new AsyncTask<Integer, Void, Product>() {
+                    Product p = new AsyncTask<Integer, Void, Product>() {
                         @Override
                         protected Product doInBackground(Integer... params) {
                             return db.productDao().getById(params[0]);
@@ -111,14 +113,20 @@ public class PayAllCartItemsService extends IntentService {
                                     new Date().getTime()
                             );
 
+
                             // add to order
                             orderItems.add(orderItem);
+
                             Log.i("M_LOG", "Vytvorena objednavka");
                         }
-                    }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, cartItem.getProductId());
-                    if(orderItems.get(orderItems.size()-1).getPrice() < balance){
-                        balance -= orderItems.get(orderItems.size()-1).getPrice();
+                    }.execute(cartItem.getProductId()).get();
+
+                    if(p.getPrice() <= balance){
+                        balance -= p.getPrice();
                     }else{
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                        editor.putFloat(MainActivity.CARD_BALANCE_KEY,balance);
+                        editor.commit();
                         return;
 
                     }
@@ -135,8 +143,10 @@ public class PayAllCartItemsService extends IntentService {
                             Log.i("M_LOG", "Zaplatene");
                         }
                     }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, cartItem);
-
                 }
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                editor.putFloat(MainActivity.CARD_BALANCE_KEY,balance);
+                editor.commit();
             }else{
                 Log.i("M_LOG", "Ziadne polozky v kosiku");
             }

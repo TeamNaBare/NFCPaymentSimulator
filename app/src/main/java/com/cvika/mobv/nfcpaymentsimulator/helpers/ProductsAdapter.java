@@ -16,11 +16,13 @@ import android.widget.TextView;
 import com.cvika.mobv.nfcpaymentsimulator.NavigationActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 import com.cvika.mobv.nfcpaymentsimulator.models.AutomatProduct;
 import com.cvika.mobv.nfcpaymentsimulator.models.CartItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.Product;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by rybec on 12.11.2017.
@@ -31,7 +33,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     private List<AutomatProduct> products;
     private Context context;
     private String uid;
-
+    private MerchandiseFragment fragment;
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView productTitleView;
@@ -52,10 +54,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         }
     }
 
-    public ProductsAdapter(List<AutomatProduct> products, Context context, String uid) {
+    public ProductsAdapter(List<AutomatProduct> products, Context context, String uid, MerchandiseFragment fragment) {
         this.products = products;
         this.context = context;
         this.uid = uid;
+        this.fragment = fragment;
     }
 
     @Override
@@ -99,7 +102,15 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
                 // pridat do kosika
                 new AddToCartAsync(v, context).execute(cartItem);
-                new RemoveFromAutomatAsync(v, context).execute(product);
+                    try {
+                        new RemoveFromAutomatAsync(v, context).execute(product).get();
+                        fragment.setProducts();
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 

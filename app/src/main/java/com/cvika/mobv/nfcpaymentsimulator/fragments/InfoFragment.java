@@ -35,6 +35,7 @@ public class InfoFragment extends Fragment {
         Log.i("ISIC ID",cardId);
     }
 
+    TextView cardBallanceText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,9 +44,14 @@ public class InfoFragment extends Fragment {
         TextView cardIdText = (TextView) view.findViewById(R.id.cardId);
         cardIdText.setText(cardId.toString());
 
-        TextView cardBallanceText = (TextView) view.findViewById(R.id.card_balance);
+        cardBallanceText = (TextView) view.findViewById(R.id.card_balance);
         cardBallanceText.setText(String.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext()).getFloat(MainActivity.CARD_BALANCE_KEY,0)));
         return view;
     }
 
+    @Override
+    public void onResume() {
+        cardBallanceText.setText(String.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext()).getFloat(MainActivity.CARD_BALANCE_KEY,0)));
+        super.onResume();
+    }
 }

@@ -30,8 +30,8 @@ public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String cardId;
-    //private static final String ADMIN_CARD = "048E610ADA2580";
-    private static final String ADMIN_CARD = "04404A5ADA2580";
+    private static final String ADMIN_CARD = "048E610ADA2580";
+    //private static final String ADMIN_CARD = "04404A5ADA2580";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +143,10 @@ public class NavigationActivity extends AppCompatActivity
         intent.setAction(PayAllCartItemsService.PAY_ALL_CART_ITEMS);
         intent.putExtra(PayAllCartItemsService.EXTRA_USER_ID, uid);
         startService(intent);
+        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+        MenuItem item = nv.getMenu().getItem(1);
+        onNavigationItemSelected(item);
+
     }
 
 

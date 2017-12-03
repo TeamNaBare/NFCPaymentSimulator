@@ -28,6 +28,9 @@ public interface ProductDao {
     @Query("SELECT * FROM products WHERE id IN (:productIds)")
     List<Product> loadAllByIds(int[] productIds);
 
+    @Query("SELECT * FROM products WHERE id=:id")
+    Product findById(int id);
+
     @Query("SELECT * FROM products WHERE title LIKE :name LIMIT 1")
     Product findByName(String name);
 
