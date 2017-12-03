@@ -47,7 +47,8 @@ public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String cardId;
-    private static final String ADMIN_CARD = "048E610ADA2580";
+    //private static final String ADMIN_CARD = "048E610ADA2580";
+    private static final String ADMIN_CARD = "04404A5ADA2580";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

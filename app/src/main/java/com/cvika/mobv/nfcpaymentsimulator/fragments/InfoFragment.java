@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.cvika.mobv.nfcpaymentsimulator.R;
 
@@ -28,15 +30,22 @@ public class InfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         cardId = preferences.getString(LOG_TAG,"");
-        Log.d("ISIC ID",cardId);
+        Log.i("ISIC ID",cardId);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_info, container, false);
+
+        TextView cardIdText = (TextView) view.findViewById(R.id.cardId);
+        cardIdText.setText(cardId.toString());
+
+        TextView cardBallanceText = (TextView) view.findViewById(R.id.card_balance);
+        cardBallanceText.setText("0 \u20ac");
+        return view;
     }
 
 }

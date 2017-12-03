@@ -10,5 +10,10 @@
 
     <dimen name="products_font_size">14sp</dimen>
 
+    <!--Info Fragment Dimensions-->
+    <dimen name="card_id_font_size">24sp</dimen>
+    <dimen name="info_fragment_padding">16dp</dimen>
+    <dimen name="info_circle_dimension">160dp</dimen>
+
 
 </resources>
