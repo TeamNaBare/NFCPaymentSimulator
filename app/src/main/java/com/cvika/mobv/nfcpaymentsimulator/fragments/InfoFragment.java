@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 
 import static com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment.LOG_TAG;
@@ -44,7 +44,7 @@ public class InfoFragment extends Fragment {
         cardIdText.setText(cardId.toString());
 
         TextView cardBallanceText = (TextView) view.findViewById(R.id.card_balance);
-        cardBallanceText.setText("0 \u20ac");
+        cardBallanceText.setText(String.valueOf(PreferenceManager.getDefaultSharedPreferences(getContext()).getFloat(MainActivity.CARD_BALANCE_KEY,0)));
         return view;
     }
 

@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 
 import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
+import com.cvika.mobv.nfcpaymentsimulator.fragments.MerchandiseFragment;
 
 public class LogoutService extends Service {
     public LogoutService() {
@@ -27,7 +28,7 @@ public class LogoutService extends Service {
             @Override
             public void run() {
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                editor.remove(MainActivity.CARD_ID_KEY);
+                editor.remove(MerchandiseFragment.LOG_TAG);
                 editor.commit();
                 Intent i = new Intent(LogoutService.this, MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

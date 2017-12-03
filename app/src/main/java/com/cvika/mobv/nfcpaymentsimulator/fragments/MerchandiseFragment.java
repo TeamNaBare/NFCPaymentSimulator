@@ -6,22 +6,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cvika.mobv.nfcpaymentsimulator.MainActivity;
-import com.cvika.mobv.nfcpaymentsimulator.NavigationActivity;
 import com.cvika.mobv.nfcpaymentsimulator.R;
 import com.cvika.mobv.nfcpaymentsimulator.db.AppDatabase;
 import com.cvika.mobv.nfcpaymentsimulator.helpers.ProductsAdapter;
-import com.cvika.mobv.nfcpaymentsimulator.models.AutomatItem;
 import com.cvika.mobv.nfcpaymentsimulator.models.AutomatProduct;
-import com.cvika.mobv.nfcpaymentsimulator.models.Product;
 
 import java.util.List;
 
@@ -50,7 +47,17 @@ public class MerchandiseFragment extends Fragment {
         context = this.getActivity().getApplicationContext();
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.productsRecyclerView);
-
+        FloatingActionButton cartButton = (FloatingActionButton) view.findViewById(R.id.showBasket);
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BasketFragment basketFragment= new BasketFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flContent, basketFragment,"findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -88,7 +95,7 @@ public class MerchandiseFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         // TODO: poslat z mainActivity
-        String uid = sharedPref.getString(MainActivity.CARD_ID_KEY, "USER123456");
+        String uid = sharedPref.getString(MerchandiseFragment.LOG_TAG, "USER123456");
 
         return uid;
     }

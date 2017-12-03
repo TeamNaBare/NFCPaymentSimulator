@@ -17,7 +17,6 @@
         android:id="@+id/showBasket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="payAllCartItems"
         android:layout_gravity="bottom|right"
         android:src="@mipmap/ic_shopping_basket"
         app:backgroundTint="#00BFA5"
